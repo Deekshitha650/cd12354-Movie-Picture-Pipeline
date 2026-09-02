@@ -1,0 +1,42 @@
+DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+            Install the buildx component to build images with BuildKit:
+            https://docs.docker.com/go/buildx/
+
+Sending build context to Docker daemon  82.94kB
+Step 1/11 : FROM public.ecr.aws/docker/library/python:3.10-alpine
+ ---> 2db8d978db4d
+Step 2/11 : ENV FLASK_RUN_HOST=0.0.0.0
+ ---> Using cache
+ ---> d45cf4046466
+Step 3/11 : WORKDIR /
+ ---> Using cache
+ ---> b08cbb4cec56
+Step 4/11 : RUN adduser -u 1000 -D app
+ ---> Using cache
+ ---> 2178b99acf11
+Step 5/11 : RUN apk update &&   apk add   pcre   pcre-dev   build-base   gcc   linux-headers   openssl   libffi-dev   && pip install pipenv
+ ---> Using cache
+ ---> c67f4ef5a0d2
+Step 6/11 : ENV CFLAGS="-Wno-incompatible-pointer-types -Wno-implicit-function-declaration"
+ ---> Running in 4fa7a1dbb594
+ ---> Removed intermediate container 4fa7a1dbb594
+ ---> 7976bb0f930c
+Step 7/11 : RUN mkdir -p /var/www/app && mkdir /app
+ ---> Running in 305592a0d680
+ ---> Removed intermediate container 305592a0d680
+ ---> 1cfec826c533
+Step 8/11 : COPY Pipfile* /app/
+ ---> 30ffbd15315b
+Step 9/11 : RUN cd /app && pipenv install --system --deploy
+ ---> Running in 4644cd048608
+Installing dependencies from Pipfile.lock (67ae76)...
+ ---> Removed intermediate container 4644cd048608
+ ---> 56e6100631f0
+Step 10/11 : COPY . /app
+ ---> 3e92b3ecf139
+Step 11/11 : CMD uwsgi --http :5000 --master --enable-threads -s /var/www/app/app.sock --manage-script-name --mount /=app:app
+ ---> Running in 09662352b845
+ ---> Removed intermediate container 09662352b845
+ ---> f03c09a14eb6
+Successfully built f03c09a14eb6
+Successfully tagged mp-backend:test

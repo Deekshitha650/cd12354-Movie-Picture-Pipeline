@@ -13,10 +13,10 @@ RUN apk update && \
   openssl \
   libffi-dev \
   && pip install pipenv
-
+ENV CFLAGS="-Wno-incompatible-pointer-types -Wno-implicit-function-declaration"
 RUN mkdir -p /var/www/app && mkdir /app
 
-COPY Pipfile* /app
+COPY Pipfile* /app/
 RUN cd /app && pipenv install --system --deploy
 
 COPY . /app

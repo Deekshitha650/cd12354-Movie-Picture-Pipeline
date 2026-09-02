@@ -27,7 +27,10 @@ jobs:
           cache: 'pipenv'
       - run: pip install pipenv
       - run: pipenv install
-      - run: pipenv run lint
+      - name: Run lint
+        run: |
+          pipenv run pip install flake8
+          pipenv run lint
 
   test:
     runs-on: ubuntu-latest
